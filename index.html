@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hortensia — Un pequeño detalle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Nunito', sans-serif;
+      background: #071f18;
+    }
+    #app {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 30%, #1a5c47 0%, #0d3d2e 50%, #071f18 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stars { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+    .star {
+      position: absolute;
+      background: rgba(255,255,255,0.65);
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    @keyframes twinkle { 0%,100%{opacity:0.25} 50%{opacity:1} }
+
+    .plant-wrap {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 28px;
+    }
+    svg#plant {
+      width: 320px;
+      height: 340px;
+      overflow: visible;
+      filter: drop-shadow(0 8px 32px rgba(0,0,0,0.45));
+    }
+
+    .panel {
+      position: relative;
+      z-index: 1;
+      background: rgba(20, 50, 36, 0.88);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 20px;
+      padding: 20px 32px 18px;
+      min-width: 300px;
+      max-width: 340px;
+      width: 100%;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+    .panel-title {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ph-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-weight: 700;
+      min-width: 24px;
+    }
+    input[type=range] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 7px;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      background: linear-gradient(to right, #4a90d9, #90c0f0, #f0a0d0, #d94a90);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.8);
+      transition: transform 0.1s;
+    }
+    input[type=range]::-webkit-slider-thumb:active { transform: scale(1.15); }
+    input[type=range]::-moz-range-thumb {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.8);
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+    .ph-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      min-width: 48px;
+    }
+    .color-name {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .heart { font-size: 17px; }
+
+    .tip {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.28);
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="stars" id="stars"></div>
+
+  <div class="plant-wrap">
+    <svg id="plant" viewBox="0 0 280 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sombra de maceta -->
+      <ellipse cx="140" cy="292" rx="52" ry="7" fill="rgba(0,0,0,0.25)"/>
+      <!-- Maceta -->
+      <rect x="88" y="218" width="104" height="65" rx="7" fill="#b5803a"/>
+      <rect x="82" y="208" width="116" height="17" rx="7" fill="#c9943f"/>
+      <!-- Detalle maceta -->
+      <line x1="100" y1="225" x2="105" y2="278" stroke="rgba(0,0,0,0.18)" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Tallos -->
+      <path d="M140 218 Q110 185 90 145" stroke="#3a8a4a" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+      <path d="M140 218 Q170 185 190 145" stroke="#3a8a4a" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+      <path d="M140 218 Q140 175 140 140" stroke="#3a8a4a" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <!-- Hojas -->
+      <ellipse cx="80" cy="158" rx="24" ry="11" fill="#2e7a3a" transform="rotate(-35,80,158)"/>
+      <ellipse cx="200" cy="158" rx="24" ry="11" fill="#2e7a3a" transform="rotate(35,200,158)"/>
+      <ellipse cx="74" cy="150" rx="17" ry="8" fill="#3a9a4a" transform="rotate(-42,74,150)"/>
+      <ellipse cx="206" cy="150" rx="17" ry="8" fill="#3a9a4a" transform="rotate(42,206,150)"/>
+      <!-- Flores (llenado por JS) -->
+      <g id="flowers"></g>
+    </svg>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">🌿 &nbsp; &nbsp; 🌿</div>
+    <div class="slider-row">
+      <span class="ph-label">4.5</span>
+      <input type="range" id="phSlider" min="45" max="85" value="48" step="1">
+      <span class="ph-label">8.5</span>
+    </div>
+    <div class="info-row">
+      <span class="ph-value" id="phDisplay">4.8</span>
+      <span class="color-name">
+        <span id="nameText" style="color:#6baee8"></span>
+        <span class="heart" id="heartEmoji">💙</span>
+      </span>
+    </div>
+  </div>
+
+  <p class="tip">Mueve el control para cambiar el color de las flores</p>
+</div>
+
+<script>
+(function () {
+  /* ── Estrellas ── */
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 35; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 3 + 1;
+    s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${(Math.random()*3).toFixed(2)}s;animation-duration:${(2+Math.random()*3).toFixed(2)}s`;
+    starsEl.appendChild(s);
+  }
+
+  /* ── Posiciones de flores (generadas una vez) ── */
+  const flowersG = document.getElementById('flowers');
+  const slider   = document.getElementById('phSlider');
+  const phDisplay  = document.getElementById('phDisplay');
+  const nameText   = document.getElementById('nameText');
+  const heartEmoji = document.getElementById('heartEmoji');
+
+  const CX = 140, CY = 118, RX = 88, RY = 72;
+  const positions = [];
+  let rngState = 42;
+  function rng() {
+    rngState = (rngState * 1664525 + 1013904223) & 0xffffffff;
+    return (rngState >>> 0) / 0xffffffff;
+  }
+  // Grid denso + aleatorio para máxima cobertura
+  for (let i = 0; i < 160; i++) {
+    const angle = rng() * Math.PI * 2;
+    const r = Math.sqrt(rng());
+    positions.push({
+      x: CX + RX * r * Math.cos(angle),
+      y: CY + RY * r * Math.sin(angle),
+      size: rng() * 2.5 + 2.5
+    });
+  }
+
+  /* ── Paleta según pH ── */
+  function colorInfo(ph) {
+    if (ph < 5.5)  return { petal:'#4a8ed4', center:'#f0e060',  nameColor:'#6baee8', heart:'💙' };
+    if (ph < 6.0)  return { petal:'#6aaee0', center:'#f3e870',  nameColor:'#7ac0ef', heart:'🩵' };
+    if (ph < 6.5)  return { petal:'#8ec0e8', center:'#f5e888',  nameColor:'#9dd0f5', heart:'🩵' };
+    if (ph < 7.0)  return { petal:'#b0aad8', center:'#f5e098',  nameColor:'#b8b0e8', heart:'💜' };
+    if (ph < 7.3)  return { petal:'#c8b0d8', center:'#f5d8a8',   nameColor:'#c8b0d8', heart:'💜' };
+    if (ph < 7.8)  return { petal:'#e090c0', center:'#f5c8a8',     nameColor:'#e880c8', heart:'🩷' };
+    return               { petal:'#e04898', center:'#f0b890',  nameColor:'#e050a8', heart:'❤️' };
+  }
+
+  /* ── Render ── */
+  function render(raw) {
+    const ph = raw / 10;
+    phDisplay.textContent = ph.toFixed(1);
+    const info = colorInfo(ph);
+    nameText.style.color = info.nameColor;
+    heartEmoji.textContent = info.heart;
+
+    // Limpiar flores anteriores
+    while (flowersG.firstChild) flowersG.removeChild(flowersG.firstChild);
+
+    // Dibujar flores
+    const NS = 'http://www.w3.org/2000/svg';
+    positions.forEach(p => {
+      const PETALS = 6;
+      for (let i = 0; i < PETALS; i++) {
+        const angle = (Math.PI * 2 / PETALS) * i;
+        const px = p.x + Math.cos(angle) * p.size * 1.15;
+        const py = p.y + Math.sin(angle) * p.size * 0.75;
+        const el = document.createElementNS(NS, 'ellipse');
+        el.setAttribute('cx', px.toFixed(2));
+        el.setAttribute('cy', py.toFixed(2));
+        el.setAttribute('rx', p.size.toFixed(2));
+        el.setAttribute('ry', (p.size * 0.65).toFixed(2));
+        el.setAttribute('fill', info.petal);
+        el.setAttribute('transform', `rotate(${((180 / Math.PI) * angle).toFixed(1)},${px.toFixed(2)},${py.toFixed(2)})`);
+        flowersG.appendChild(el);
+      }
+      // Centro
+      const ctr = document.createElementNS(NS, 'circle');
+      ctr.setAttribute('cx', p.x.toFixed(2));
+      ctr.setAttribute('cy', p.y.toFixed(2));
+      ctr.setAttribute('r', (p.size * 0.6).toFixed(2));
+      ctr.setAttribute('fill', info.center);
+      flowersG.appendChild(ctr);
+    });
+  }
+
+  slider.addEventListener('input', () => render(parseInt(slider.value)));
+  render(parseInt(slider.value));
+})();
+</script>
+</body>
+</html>
